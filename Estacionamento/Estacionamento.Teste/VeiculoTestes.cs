@@ -1,5 +1,3 @@
-using Estacionamento.Models;
-
 namespace Estacionamento.Teste;
 
 public class VeiculoTestes

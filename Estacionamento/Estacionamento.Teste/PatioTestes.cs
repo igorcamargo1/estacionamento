@@ -1,13 +1,19 @@
 ﻿namespace Estacionamento.Teste;
 
-public class PatioTestes
+public class PatioTestes :IDisposable
 {
+    private Veiculo veiculo;
+    private Patio estacionamento;
+    public PatioTestes()
+    {
+        veiculo = new Veiculo();
+        estacionamento = new Patio();
+    }
+
     [Fact]
     public void ValidaFaturamentoEstacionamentoComVeiculo()
     {
         //Arrange
-        var estacionamento = new Patio();
-        var veiculo = new Veiculo();
         veiculo.Proprietario = "Igor Camargo";
         veiculo.Tipo = TipoVeiculo.Automovel;
         veiculo.Modelo = "Fusca";
@@ -33,8 +39,6 @@ public class PatioTestes
                                   string modelo)
     {
         //Arrange
-        var estacionamento = new Patio();
-        var veiculo = new Veiculo();
         veiculo.Proprietario = proprietario;
         veiculo.Placa= placa;
         veiculo.Cor = cor;
@@ -55,8 +59,6 @@ public class PatioTestes
                                   string modelo)
     {
         //Arrange
-        var estacionamento = new Patio();
-        var veiculo = new Veiculo();
         veiculo.Proprietario = proprietario;
         veiculo.Placa = placa;
         veiculo.Cor = cor;
@@ -75,9 +77,11 @@ public class PatioTestes
     public void AlteraDadosProprioVeiculo()
     {
         //Arrange
-        var estacionamento = new Patio();
-        var veiculo = new Veiculo();
-         
+        veiculo.Proprietario = "Igor Camargo";
+        veiculo.Tipo = TipoVeiculo.Automovel;
+        veiculo.Modelo = "Fusca";
+        veiculo.Cor = "Azul";
+        veiculo.Placa = "asd-8788";
         estacionamento.RegistrarEntradaVeiculo(veiculo);
 
         var veiculoAlterado = new Veiculo();
@@ -94,4 +98,8 @@ public class PatioTestes
         Assert.Equal(alterado.Cor, veiculoAlterado.Cor);
     }
 
+    public void Dispose()
+    {
+        throw new NotImplementedException();
+    }
 }

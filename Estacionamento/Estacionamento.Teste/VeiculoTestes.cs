@@ -1,3 +1,5 @@
+using Estacionamento.Models;
+
 namespace Estacionamento.Teste;
 
 public class VeiculoTestes
@@ -30,5 +32,21 @@ public class VeiculoTestes
     public void ValidaNomeProprietario()
     {
 
+    }
+
+    [Fact]
+    public void DadosVeiculo()
+    {
+        //Arrange
+        var carro = new Veiculo();
+        carro.Proprietario = "Igor Camargo";
+        carro.Tipo = TipoVeiculo.Automovel;
+        carro.Modelo = "Fusca";
+        carro.Cor = "Azul";
+        carro.Placa = "asd-8788";
+        //Act
+        string dados = carro.ToString();
+        //Assert
+        Assert.Contains("Ficha do Veículo:",dados);
     }
 }

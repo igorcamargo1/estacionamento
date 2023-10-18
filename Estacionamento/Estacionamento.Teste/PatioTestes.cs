@@ -1,11 +1,17 @@
-﻿namespace Estacionamento.Teste;
+﻿using Xunit.Abstractions;
+
+namespace Estacionamento.Teste;
 
 public class PatioTestes :IDisposable
 {
     private Veiculo veiculo;
     private Patio estacionamento;
-    public PatioTestes()
+    public ITestOutputHelper Output { get; }
+    public PatioTestes(ITestOutputHelper output)
     {
+        Output = output;
+        Output.WriteLine("Execução do Construtor");
+
         veiculo = new Veiculo();
         estacionamento = new Patio();
     }
@@ -53,7 +59,7 @@ public class PatioTestes :IDisposable
 
     [Theory]
     [InlineData("André Silva", "ASD-1458", "Branco", "Golf")]
-    public void LocalizaVeiculoPatioPelaPlaca(string proprietario,
+    public void LocalizaVeiculoPatioComBaseNoIdTicket(string proprietario,
                                   string placa,
                                   string cor,
                                   string modelo)
@@ -66,10 +72,10 @@ public class PatioTestes :IDisposable
         estacionamento.RegistrarEntradaVeiculo(veiculo);
 
         //Act
-        var consulta = estacionamento.PesquisaVeiculo(placa);
+        var consulta = estacionamento.PesquisaVeiculo(veiculo.IdTicket);
 
         //Assert
-        Assert.Equal(placa, consulta.Placa);
+        Assert.Contains("### TICKET ESTACIONAMENTO ###", consulta.Ticket);
     }
 
 
@@ -100,6 +106,6 @@ public class PatioTestes :IDisposable
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        Output.WriteLine("Execução do Cleanup");
     }
 }

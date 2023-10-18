@@ -1,12 +1,17 @@
 using Estacionamento.Models;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
+using Xunit.Abstractions;
 
 namespace Estacionamento.Teste;
 
 public class VeiculoTestes : IDisposable
 {
     private Veiculo veiculo;
-    public VeiculoTestes()
+    public ITestOutputHelper Output { get; }
+    public VeiculoTestes(ITestOutputHelper output)
     {
+        Output = output;
+        Output.WriteLine("Execução do Construtor");
         veiculo = new Veiculo();
     }
     [Fact]
@@ -53,8 +58,40 @@ public class VeiculoTestes : IDisposable
         Assert.Contains("Ficha do Veículo:",dados);
     }
 
+    [Fact]
+    public void TesteNomeProprietarioVeiculoComMenosDeTresCatacteres()
+    {
+        //Arrange
+        string nomeProprietario = "Ab";
+
+        
+        //Assert
+        Assert.Throws<System.FormatException>(
+            //Act
+            () => new Veiculo(nomeProprietario)
+            );
+
+        
+    }
+
+    [Fact]
+    public void TesteMensagemDeExcecaoQuartoCaractereDaPlaca()
+    {
+        //Arrange
+        string placa = "ASDF8888";
+
+        //Assert
+        var mensagem = Assert.Throws<System.FormatException>(
+            //Act
+            () => new Veiculo().Placa = placa
+            );
+
+        //Assert
+        Assert.Equal("O 4° caractere deve ser um hífen", mensagem.Message);
+    }
+
     public void Dispose()
     {
-        throw new NotImplementedException();
+        Output.WriteLine("Execução do Cleanup");
     }
 }

@@ -3,7 +3,7 @@
 public class PatioTestes
 {
     [Fact]
-    public void ValidaFaturamento()
+    public void ValidaFaturamentoEstacionamentoComVeiculo()
     {
         //Arrange
         var estacionamento = new Patio();
@@ -27,7 +27,7 @@ public class PatioTestes
     [InlineData("André Silva", "ASD-1458", "Branco", "Golf")]
     [InlineData("Igor Camargo", "FFF-1458","Preto", "Corolla")]
     [InlineData("Marta Souza", "ABC-1234", "Prata", "Palio")]
-    public void ValidaFaturamentoComVariosVeiculos(string proprietario,
+    public void ValidaFaturamentoEstacionamentoComVariosVeiculos(string proprietario,
                                   string placa,
                                   string cor,
                                   string modelo)
@@ -49,7 +49,7 @@ public class PatioTestes
 
     [Theory]
     [InlineData("André Silva", "ASD-1458", "Branco", "Golf")]
-    public void LocalizaVeiculoPatio(string proprietario,
+    public void LocalizaVeiculoPatioPelaPlaca(string proprietario,
                                   string placa,
                                   string cor,
                                   string modelo)
@@ -72,16 +72,12 @@ public class PatioTestes
 
 
     [Fact]
-    public void AlteraDadosVeiculo()
+    public void AlteraDadosProprioVeiculo()
     {
         //Arrange
         var estacionamento = new Patio();
         var veiculo = new Veiculo();
-        veiculo.Proprietario = "Igor Camargo";
-        veiculo.Tipo = TipoVeiculo.Automovel;
-        veiculo.Modelo = "Fusca";
-        veiculo.Cor = "Azul";
-        veiculo.Placa = "asd-8788";
+         
         estacionamento.RegistrarEntradaVeiculo(veiculo);
 
         var veiculoAlterado = new Veiculo();
